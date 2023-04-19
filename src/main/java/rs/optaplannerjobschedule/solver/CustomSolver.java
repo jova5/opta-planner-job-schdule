@@ -23,6 +23,39 @@ import java.util.List;
 @Slf4j
 public class CustomSolver {
 
+    public static <T, E extends SolverEventListener<T>> T solveJobSchedulingZero(
+            Class<? extends ConstraintProvider> constraintProviderClass,
+            T problem, Integer duration,
+            String bestScoreLimit,
+            Boolean bestScoreFeasible,
+            E bestSolutionEventListener,
+            Long unimprovedSecondsSpentLimit,
+            Class<?>... entityClasses) {
+
+        Class<?> problemClass = problem.getClass();
+        TerminationConfig terminationConfig =
+                new TerminationConfig().withBestScoreLimit(bestScoreLimit)
+                                       .withSecondsSpentLimit((long) duration)
+                                       .withUnimprovedSecondsSpentLimit(unimprovedSecondsSpentLimit);
+        if (bestScoreFeasible) {
+            terminationConfig.withBestScoreFeasible(true);
+        }
+
+        SolverConfig solverConfig = new SolverConfig().withSolutionClass(problemClass)
+                                                      .withEntityClasses(entityClasses)
+                                                      .withConstraintProviderClass(constraintProviderClass)
+                                                      .withTerminationSpentLimit(Duration.ofSeconds(duration))
+                                                      .withConstraintStreamImplType(ConstraintStreamImplType.BAVET)
+                                                      .withTerminationConfig(terminationConfig);
+
+        SolverFactory<T> solverFactory = SolverFactory.create(solverConfig);
+        Solver<T> solver = solverFactory.buildSolver();
+        if (bestSolutionEventListener != null) {
+            solver.addEventListener(bestSolutionEventListener);
+        }
+        return solver.solve(problem);
+    }
+
     public static <T, E extends SolverEventListener<T>> T solveJobSchedulingOne(
             Class<? extends ConstraintProvider> constraintProviderClass,
             T problem, Integer duration,

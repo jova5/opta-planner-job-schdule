@@ -34,7 +34,7 @@ public class JobSchedulingServiceImpl implements JobSchedulingService {
             score = "0hard/" + numOfJobs + "medium/0soft";
         }
         JobSchedule solution =
-                CustomSolver.solveJobSchedulingThree(JobScheduleConstraintProvider.class, problem, secondsForOptimization,
+                CustomSolver.solveJobSchedulingOne(JobScheduleConstraintProvider.class, problem, secondsForOptimization,
                                                 score, false, null, (long) unimprovedSecondsSpentLimit, Task.class,
                                                 Employee.class);
         return solution;
