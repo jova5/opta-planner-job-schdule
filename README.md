@@ -3,7 +3,10 @@ Scheduling jobs with custom Construction Heuristic phase for better scaling.
 
 This repo is ment for my question on stackowerflow [link](https://stackoverflow.com/questions/76052092/optaplanner-optimizing-construction-heuristic-phase-for-planningentity-with-2-o).
 
-I will update this repo with the solution, but for now it is not ment to be used as solution.
+Be aware that I solved this problem, and it works with first approach.
+
+
+I will leave these logs and aproches for better understanding of the problem that I had, and you can go back in commits to see how it looked like before solution.
 
 First approach:
 
