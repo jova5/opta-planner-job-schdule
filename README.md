@@ -1,9 +1,15 @@
 # opta-planner-job-schdule
 Scheduling jobs with custom Construction Heuristic phase for better scaling.
 
+This repo is ment for my question on stackowerflow [link](https://stackoverflow.com/questions/76052092/optaplanner-optimizing-construction-heuristic-phase-for-planningentity-with-2-o).
+
+I will update this repo with the solution, but for now it is not ment to be used as solution.
+
 First approach:
 
 ```java
+...
+
     ConstructionHeuristicPhaseConfig phaseConfig = new ConstructionHeuristicPhaseConfig();
     ChangeMoveSelectorConfig changeMoveSelectorConfig = new ChangeMoveSelectorConfig();
     ValueSelectorConfig valueSelectorConfig = new ValueSelectorConfig();
@@ -16,6 +22,8 @@ First approach:
     phaseConfig.setMoveSelectorConfigList(Arrays.asList(changeMoveSelectorConfig,changeMoveSelectorConfig1));
 
     SolverConfig solverConfig = new SolverConfig().withPhaseList(List.of(phaseConfig));
+    
+...
 ```
 
 First approach log:
@@ -106,12 +114,12 @@ CH step (80), time spent (128), score (0hard/0medium/0soft), selected move count
 CH step (81), time spent (129), score (0hard/0medium/0soft), selected move count (541), picked move (Task_40 Employee: null Start Time: null {null -> null}).
 Construction Heuristic phase (0) ended: time spent (130), best score (0hard/0medium/0soft), score calculation speed (291272/sec), step total (82).
 Solving ended: time spent (130), best score (0hard/0medium/0soft), score calculation speed (172530/sec), phase total (1), environment mode (REPRODUCIBLE), move thread count (NONE).
-
 ```
 
 Second approach:
 
 ```java
+...
     ConstructionHeuristicPhaseConfig phaseConfig = new ConstructionHeuristicPhaseConfig();
     QueuedEntityPlacerConfig queuedEntityPlacerConfig = new QueuedEntityPlacerConfig();
     EntitySelectorConfig entitySelectorConfig = new EntitySelectorConfig();
@@ -135,6 +143,8 @@ Second approach:
     phaseConfig.setEntityPlacerConfig(queuedEntityPlacerConfig);
 
     SolverConfig solverConfig = new SolverConfig().withPhaseList(List.of(phaseConfig));
+
+...
 ```
 
 Second approach log:
@@ -230,6 +240,7 @@ Solving ended: time spent (175), best score (0hard/0medium/0soft), score calcula
 Third approach:
 
 ```java
+...
     ConstructionHeuristicPhaseConfig phaseConfig = new ConstructionHeuristicPhaseConfig();
     QueuedEntityPlacerConfig queuedEntityPlacerConfig = new QueuedEntityPlacerConfig();
     EntitySelectorConfig entitySelectorConfig = new EntitySelectorConfig();
@@ -260,6 +271,8 @@ Third approach:
     phaseConfig2.setEntityPlacerConfig(queuedEntityPlacerConfig2);
 
     SolverConfig solverConfig = new SolverConfig().withPhaseList(Arrays.asList(phaseConfig, phaseConfig2));
+
+...
 ```
 
 Third approach log:
