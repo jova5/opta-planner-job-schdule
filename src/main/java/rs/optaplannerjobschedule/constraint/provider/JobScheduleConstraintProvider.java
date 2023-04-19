@@ -16,11 +16,11 @@ public class JobScheduleConstraintProvider implements ConstraintProvider {
     public Constraint[] defineConstraints(ConstraintFactory constraintFactory) {
         return new Constraint[]{
                 noMoreTaskThanWorkingMinutes(constraintFactory),
-                everyTaskShouldBeAssigned(constraintFactory),
+//                everyTaskShouldBeAssigned(constraintFactory),
                 everyTaskShouldBeAssignedToEmployeeWithAdequateSkill(constraintFactory),
                 tasksDontOverlap(constraintFactory),
                 rewardEveryAssignedTask(constraintFactory),
-                everyAssignedTaskShouldBeInitializedWithTime(constraintFactory),
+//                everyAssignedTaskShouldBeInitializedWithTime(constraintFactory),
                 rewardEveryAssignedTaskInitializedWithTime(constraintFactory),
         };
     }
@@ -33,14 +33,14 @@ public class JobScheduleConstraintProvider implements ConstraintProvider {
                                 .asConstraint("noMoreTaskThanWorkingMinutes");
     }
 
-    public Constraint everyTaskShouldBeAssigned(ConstraintFactory constraintFactory) {
+    public Constraint rewardEveryAssignedTask(ConstraintFactory constraintFactory) {
         return constraintFactory.forEachIncludingNullVars(Task.class)
                                 .filter(task -> task.getEmployee() != null)
                                 .reward(HardMediumSoftScore.ONE_SOFT)
                                 .asConstraint("everyTaskShouldBeAssigned");
     }
-
-    public Constraint rewardEveryAssignedTask(ConstraintFactory constraintFactory) {
+    // Not necessary
+    public Constraint everyTaskShouldBeAssigned(ConstraintFactory constraintFactory) {
         return constraintFactory.forEachIncludingNullVars(Task.class)
                                 .filter(task -> task.getEmployee() == null)
                                 .penalize(HardMediumSoftScore.ONE_MEDIUM)
@@ -75,7 +75,7 @@ public class JobScheduleConstraintProvider implements ConstraintProvider {
                                 .penalize(HardMediumSoftScore.ONE_HARD)
                                 .asConstraint("tasksDontOverlap");
     }
-
+// Not necessary
     public Constraint everyAssignedTaskShouldBeInitializedWithTime(ConstraintFactory constraintFactory) {
         return constraintFactory.forEachIncludingNullVars(Task.class)
                                 .filter(task -> {
