@@ -81,7 +81,7 @@ public class JobSchedulingServiceImpl implements JobSchedulingService {
         Random random = new Random();
         List<Task> taskList = new ArrayList<>();
         for (int i = 0; i < numOfTasks; i++) {
-            taskList.add(new Task((long) i, "Task_" + i, random.nextInt(60) + 1, getRandomTaskSkill()));
+            taskList.add(new Task((long) i, "Task_" + i, random.nextInt(60) + 1, getRandomTaskSkill(), random.nextInt(10) + 1));
         }
         return taskList;
     }

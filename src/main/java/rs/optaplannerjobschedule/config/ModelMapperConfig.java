@@ -47,6 +47,7 @@ public class ModelMapperConfig {
                     t.setTimeNeeded(task.getTimeNeeded());
                     t.setSkillRequired(task.getSkillRequired());
                     t.setStartTime(task.getStartTime());
+                    t.setPriority(task.getPriority());
                     tasks1.add(t);
                 }
 
@@ -63,6 +64,7 @@ public class ModelMapperConfig {
                 t.setSkillRequired(task.getSkillRequired());
                 t.setTimeNeeded(task.getTimeNeeded());
                 t.setStartTime(task.getStartTime());
+                t.setPriority(task.getPriority());
 
                 Employee e = new Employee();
                 if (task.getEmployee() != null) {

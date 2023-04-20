@@ -12,6 +12,8 @@ import org.optaplanner.core.config.heuristic.selector.common.SelectionCacheType;
 import org.optaplanner.core.config.heuristic.selector.entity.EntitySelectorConfig;
 import org.optaplanner.core.config.heuristic.selector.move.generic.ChangeMoveSelectorConfig;
 import org.optaplanner.core.config.heuristic.selector.value.ValueSelectorConfig;
+import org.optaplanner.core.config.localsearch.LocalSearchPhaseConfig;
+import org.optaplanner.core.config.localsearch.LocalSearchType;
 import org.optaplanner.core.config.solver.SolverConfig;
 import org.optaplanner.core.config.solver.termination.TerminationConfig;
 import rs.optaplannerjobschedule.model.planningEntity.Task;
@@ -75,15 +77,21 @@ public class CustomSolver {
         }
 
         ConstructionHeuristicPhaseConfig phaseConfig = new ConstructionHeuristicPhaseConfig();
+
         ChangeMoveSelectorConfig changeMoveSelectorConfig = new ChangeMoveSelectorConfig();
         ValueSelectorConfig valueSelectorConfig = new ValueSelectorConfig();
         valueSelectorConfig.setVariableName("employee");
         changeMoveSelectorConfig.setValueSelectorConfig(valueSelectorConfig);
+
         ChangeMoveSelectorConfig changeMoveSelectorConfig1 = new ChangeMoveSelectorConfig();
         ValueSelectorConfig valueSelectorConfig1 = new ValueSelectorConfig();
         valueSelectorConfig1.setVariableName("startTime");
         changeMoveSelectorConfig1.setValueSelectorConfig(valueSelectorConfig1);
+
         phaseConfig.setMoveSelectorConfigList(Arrays.asList(changeMoveSelectorConfig, changeMoveSelectorConfig1));
+
+        LocalSearchPhaseConfig localSearchPhaseConfig = new LocalSearchPhaseConfig();
+        localSearchPhaseConfig.setLocalSearchType(LocalSearchType.TABU_SEARCH);
 
         SolverConfig solverConfig = new SolverConfig().withSolutionClass(problemClass)
                                                       .withEntityClasses(entityClasses)
@@ -91,7 +99,7 @@ public class CustomSolver {
                                                       .withTerminationSpentLimit(Duration.ofSeconds(duration))
                                                       .withConstraintStreamImplType(ConstraintStreamImplType.BAVET)
                                                       .withTerminationConfig(terminationConfig)
-                                                      .withPhaseList(List.of(phaseConfig));
+                                                      .withPhaseList(List.of(phaseConfig, localSearchPhaseConfig));
 
         SolverFactory<T> solverFactory = SolverFactory.create(solverConfig);
         Solver<T> solver = solverFactory.buildSolver();

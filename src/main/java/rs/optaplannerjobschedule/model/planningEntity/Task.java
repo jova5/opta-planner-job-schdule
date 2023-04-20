@@ -13,6 +13,7 @@ public class Task {
     private String taskName;
     private Integer timeNeeded;
     private String skillRequired;
+    private Integer priority;
     @PlanningVariable(nullable = true)
     private Employee employee;
     @PlanningVariable(nullable = true)
@@ -21,11 +22,12 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, String taskName, Integer timeNeeded, String skillRequired) {
+    public Task(Long id, String taskName, Integer timeNeeded, String skillRequired, Integer priority) {
         this.id = id;
         this.taskName = taskName;
         this.timeNeeded = timeNeeded;
         this.skillRequired = skillRequired;
+        this.priority = priority;
     }
 
     public Long getId() {
@@ -74,6 +76,14 @@ public class Task {
 
     public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 
     @Override
